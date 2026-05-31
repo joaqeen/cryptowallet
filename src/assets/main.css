@@ -1,0 +1,24 @@
+@import "tailwindcss";
+@plugin "flyonui";
+@import "flyonui/variants.css";
+@source "../node_modules/flyonui/flyonui.js";
+
+@plugin "flyonui/theme" {
+  name: "mytheme";
+  default: true;
+  color-scheme: dark;
+
+  --color-primary: #3e88ea;
+  --color-primary-content: #f0f7fe;
+
+  --color-base-100: #1b2a50;
+  --color-base-200: #244284;
+  --color-base-300: #274ba6;
+  --color-base-content: #f0f7fe;
+
+  --color-secondary: #285ccd;
+  --color-secondary-content: #f0f7fe;
+
+  --color-accent: #69adf1;
+  --color-accent-content: #1b2a50;
+}

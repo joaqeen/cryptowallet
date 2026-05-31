@@ -6,8 +6,8 @@ import AppFooter from './components/layout/AppFooter.vue';
 
 <template>
   <AppNavBar />
-  <AppFooter />
   <RouterView />
+  <AppFooter />
 </template>
 
 <style scoped>
