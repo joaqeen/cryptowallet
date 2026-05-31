@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "flyonui/src/vendor/flatpickr.css";
 @plugin "flyonui";
 @import "flyonui/variants.css";
 @source "../node_modules/flyonui/flyonui.js";
@@ -11,7 +12,7 @@
   --color-primary: #3e88ea;
   --color-primary-content: #f0f7fe;
 
-  --color-base-100: #1b2a50;
+  --color-base-100: #244284;
   --color-base-200: #244284;
   --color-base-300: #274ba6;
   --color-base-content: #f0f7fe;
