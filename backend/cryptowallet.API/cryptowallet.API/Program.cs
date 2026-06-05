@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddHttpClient<ICryptoYaService, CryptoYaService>();
+builder.Services.AddScoped<IWalletService, WalletService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));

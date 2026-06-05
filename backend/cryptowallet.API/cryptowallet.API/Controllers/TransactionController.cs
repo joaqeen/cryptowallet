@@ -28,7 +28,7 @@ namespace cryptowallet.API.Controllers
 
         // GET: api/Transaction
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TransactionDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<TransactionDto>>> GetAll() //Muestra todas las transacciones de todos los clientes
         {
             var transactions = await _transactionService.GetAll();
             return Ok(transactions);
@@ -36,7 +36,7 @@ namespace cryptowallet.API.Controllers
 
         // GET: api/Transaction/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Transaction>> GetById(int id)
+        public async Task<ActionResult<Transaction>> GetById(int id) //Muestra transaccion segun su ID.
         {
             var transaction = await _transactionService.GetById(id);
 
@@ -46,6 +46,12 @@ namespace cryptowallet.API.Controllers
             }
 
             return Ok(transaction);
+        }
+
+        [HttpGet("client/{clientId}")]
+        public async Task<ActionResult<IEnumerable<TransactionDto>>> GetAllByClient(int clientId) //Muestra historial de transacciones segun cliente
+        {
+
         }
 
         // PUT: api/Transaction/5
@@ -69,6 +75,10 @@ namespace cryptowallet.API.Controllers
         public async Task<ActionResult<TransactionDto>> Create(Transaction transaction)
         {
             var transactionDto = await _transactionService.Create(transaction);
+            if(transactionDto == null)
+            {
+                return BadRequest("No tenés suficiente cryptos para vender.");
+            }
 
             return CreatedAtAction(nameof(GetAll), new { id = transactionDto.Id }, transactionDto);
         }
