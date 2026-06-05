@@ -62,6 +62,31 @@ namespace cryptowallet.API.Services
             return transactionDto;
         }
 
+        public async Task<List<TransactionDto>> GetAllByClient(int idCliente)
+        {
+            var clientTransactions = await _context.Transactions
+                .Where(t => t.IdCliente == idCliente)
+                .ToListAsync();
+
+            if (clientTransactions == null)
+            {
+                return null;
+            }
+
+            var transactionDto = clientTransactions.Select(t => new TransactionDto
+            {
+                Id = t.Id,
+                Accion = t.Accion,
+                CodCrypto = t.CodCrypto,
+                IdCliente = t.IdCliente,
+                CantidadCrypto = t.CantidadCrypto,
+                TotalMoneda = t.TotalMoneda,
+                Fecha = t.Fecha,
+            }).ToList();
+
+            return transactionDto;
+        }
+
         public async Task<TransactionDto> Create(Transaction transaction)
         {
             if (transaction.Accion == "sale") //Si la accion de la transaccion es vender, debemos verificar si contamos con las cryptos disponibles para venderlas.

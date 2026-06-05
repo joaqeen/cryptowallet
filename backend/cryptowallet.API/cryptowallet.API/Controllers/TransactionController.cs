@@ -51,7 +51,8 @@ namespace cryptowallet.API.Controllers
         [HttpGet("client/{clientId}")]
         public async Task<ActionResult<IEnumerable<TransactionDto>>> GetAllByClient(int clientId) //Muestra historial de transacciones segun cliente
         {
-
+            var clientTransactions = await _transactionService.GetAllByClient(clientId);
+            return Ok(clientTransactions);
         }
 
         // PUT: api/Transaction/5

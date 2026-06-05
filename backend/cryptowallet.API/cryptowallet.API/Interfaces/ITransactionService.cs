@@ -7,6 +7,7 @@ namespace cryptowallet.API.Interfaces
     {
         Task<List<TransactionDto>> GetAll();
         Task<TransactionDto?> GetById(int id);
+        Task<List<TransactionDto>> GetAllByClient(int idCliente);
         Task<TransactionDto> Create (Transaction transaction);
         Task<bool> Update (int id, Transaction transaction);
         Task<bool> Delete (int id);
