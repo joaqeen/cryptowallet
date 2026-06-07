@@ -9,17 +9,17 @@
   default: true;
   color-scheme: dark;
 
-  --color-primary: #3e88ea;
-  --color-primary-content: #f0f7fe;
+  --color-primary: #9751fb;
+  --color-primary-content: #f9f5ff;
 
-  --color-base-100: #244284;
-  --color-base-200: #244284;
-  --color-base-300: #274ba6;
-  --color-base-content: #f0f7fe;
+  --color-base-100: #4d198a;
+  --color-base-200: #802eef;
+  --color-base-300: #5d1eab;
+  --color-base-content: #f9f5ff;
 
-  --color-secondary: #285ccd;
-  --color-secondary-content: #f0f7fe;
+  --color-secondary: #802eef;
+  --color-secondary-content: #f9f5ff;
 
-  --color-accent: #69adf1;
-  --color-accent-content: #1b2a50;
+  --color-accent: #a970ff;
+  --color-accent-content: #310566;
 }

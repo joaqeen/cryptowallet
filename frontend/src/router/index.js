@@ -23,6 +23,11 @@ const router = createRouter({
       name: 'transactions',
       component: () => import('../views/TransactionsView.vue'),
     },
+    {
+      path: '/userRegister',                            //Para declararlo como componente, primero hay que importarlo.
+      name: 'userRegister',
+      component: () => import('../views/UserRegisterView.vue'),
+    },
   ],
 })
 

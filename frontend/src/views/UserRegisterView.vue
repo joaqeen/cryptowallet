@@ -1,27 +1,23 @@
 <script setup>
-import { CRYPTOS } from '../../constants/cryptos.js' //Importamos las criptomonedas para el select del formulario
 import { Field, Form, ErrorMessage } from 'vee-validate'
 import * as yup from 'yup'
+import api from '../services/api.js'
 
-const props = defineProps({
-  title: String,
-  buttonText: String,
-})
+const onSubmit = async (values) => {
+  try {
+    await api.post('/client', {
+      nombre: values.userName,
+      email: values.userEmail,
+    })
+  } catch (error) {
+    console.error('Error al crear el cliente:', error)
+  }
+}
 
 const schema = yup.object({
-  //Esquema de validacion para el formulario de compra
-  crypto: yup.string().required('Seleccione una criptomoneda'),
-  quantity: yup
-    .number()
-    .positive('La cantidad debe ser mayor que cero')
-    .required('Ingrese la cantidad'),
-  date: yup.date().typeError('Seleccione una fecha válida').required('Seleccione una fecha'),
+  userName: yup.string().required('Ingrese el nombre'),
+  userEmail: yup.string().email('Email inválido').required('Ingrese el email'),
 })
-
-const onSubmit = (values) => {
-  console.log('Formulario enviado con los siguientes valores:', values)
-  //agregar logica para procesar la compra
-}
 </script>
 
 <template>
@@ -71,55 +67,45 @@ const onSubmit = (values) => {
       <div
         class="bg-base-100 shadow-base-300/20 z-1 w-full space-y-6 rounded-xl p-6 shadow-md sm:min-w-md lg:p-8"
       >
-        <h1 class="text-3xl font-bold m-6 ml-8 underline">{{ props.title }}</h1>
-
-        <Form :validation-schema="schema" @submit="onSubmit">
-          <div class="w-80 ml-8">
-            <label class="label-text" for="selectCripto">Cryptomoneda:</label>
-            <Field
-              as="select"
-              class="select select-sm"
-              aria-label="select"
-              id="selectCripto"
-              name="crypto"
-            >
-              <option v-for="crypto in CRYPTOS" :key="crypto.code" :value="crypto.code">
-                {{ crypto.name }}
-              </option>
-            </Field>
-            <ErrorMessage name="crypto" class="text-red-500 text-sm mt-1" />
-          </div>
-
-          <div class="w-80 ml-8">
-            <label class="label-text" for="quantityCripto">Cantidad:</label>
-
-            <Field
-              type="number"
-              name="quantity"
-              class="input input-sm"
-              placeholder="Cantidad a comprar"
-              id="quantityCripto"
-            />
-            <ErrorMessage name="quantity" class="text-red-500 text-sm mt-1" />
-          </div>
-
-          <div class="w-80 ml-8">
-            <label class="label-text" for="dateCripto">Seleccione la fecha:</label>
-
-            <Field
-              type="date"
-              name="date"
-              class="input input-sm"
-              placeholder="YYYY-MM-DD"
-              id="dateCripto"
-            />
-            <ErrorMessage name="date" class="text-red-500 text-sm mt-1" />
-          </div>
-
-          <button type="submit" class="btn m-8 w-80 btn-sm btn-gradient btn-primary rounded-full">
-            {{ props.buttonText }}
-          </button>
-        </Form>
+        <div class="flex items-center gap-3">
+          <img src="../assets/icons/bitcoin-wallet.svg" class="size-8 invert" alt="brand-logo" />
+          <h2 class="text-base-content text-xl font-bold">Crypto Wallet</h2>
+        </div>
+        <div>
+          <h3 class="text-base-content mb-1.5 text-2xl font-semibold">Registrá un usuario</h3>
+          <p class="text-base-content/80">Administra criptomonedas de manera sencilla</p>
+        </div>
+        <div class="space-y-4">
+          <Form :validation-schema="schema" @submit="onSubmit" class="mb-4 space-y-4">
+            <div>
+              <label class="label-text" for="userName">Nombre de Usuario</label>
+              <Field
+                type="text"
+                placeholder="Ingrese el usuario"
+                class="input"
+                id="userName"
+                name="userName"
+                required
+              ></Field>
+              <ErrorMessage name="userName" class="text-red-500 text-sm mt-1" />
+            </div>
+            <div>
+              <label class="label-text" for="userEmail">Correo Electrónico</label>
+              <Field
+                type="email"
+                placeholder="Ingrese el correo electrónico"
+                class="input"
+                id="userEmail"
+                name="userEmail"
+                required
+              ></Field>
+              <ErrorMessage name="userEmail" class="text-red-500 text-sm mt-1" />
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary btn-gradient btn-block">
+              Registrar Usuario
+            </button>
+          </Form>
+        </div>
       </div>
     </div>
   </div>

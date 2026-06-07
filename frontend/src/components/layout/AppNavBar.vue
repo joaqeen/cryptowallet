@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <nav class="navbar rounded-box shadow-sm">
+  <nav class="navbar rounded-box shadow-sm bg-base-300">
   <div class="w-full md:flex md:items-center md:gap-2">
     <div class="flex items-center justify-between">
       <div class="navbar-start items-center justify-between max-md:w-full">
@@ -23,6 +23,7 @@
         <li><RouterLink to ="/wallet">Billetera</RouterLink></li>
         <li><RouterLink to="/buy">Comprar</RouterLink></li>
         <li><RouterLink to="/sell">Vender</RouterLink></li>
+        <li><RouterLink to="/userRegister">Registrar Usuario</RouterLink></li>
       </ul>
     </div>
   </div>
