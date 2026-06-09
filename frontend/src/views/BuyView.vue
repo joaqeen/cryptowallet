@@ -3,5 +3,5 @@ import CryptoForm from '../components/shared/CryptoForm.vue'
 </script>
 
 <template>
-    <CryptoForm title="Compra de Cryptomoneda" buttonText="Comprar" />
+    <CryptoForm title="Compra de Cryptomoneda" buttonText="Comprar" action="purchase" />
 </template>

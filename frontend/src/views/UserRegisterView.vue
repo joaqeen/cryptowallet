@@ -27,8 +27,8 @@ const schema = yup.object({
     <div class="relative flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div class="absolute">
         <svg
-          width="612"
-          height="697"
+          width="1000"
+          height="1000"
           viewBox="0 0 612 697"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
