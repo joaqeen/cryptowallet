@@ -20,7 +20,7 @@
     </div>
     <div id="logo-navbar-collapse" class="md:navbar-end collapse hidden grow basis-full overflow-hidden transition-[height] duration-300 max-md:w-full" >
       <ul class="menu md:menu-horizontal gap-2 p-0 text-base max-md:mt-2">
-        <li><RouterLink to ="/wallet">Billetera</RouterLink></li>
+        <li><RouterLink to ="/">Billetera</RouterLink></li>
         <li><RouterLink to="/buy">Comprar</RouterLink></li>
         <li><RouterLink to="/sell">Vender</RouterLink></li>
         <li><RouterLink to="/userRegister">Registrar Usuario</RouterLink></li>

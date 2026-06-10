@@ -66,6 +66,7 @@ namespace cryptowallet.API.Services
         {
             var clientTransactions = await _context.Transactions
                 .Where(t => t.IdCliente == idCliente)
+                .OrderByDescending(t => t.Fecha)
                 .ToListAsync();
 
             if (clientTransactions == null)
