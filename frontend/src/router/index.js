@@ -19,7 +19,7 @@ const router = createRouter({
       component: () => import('@/views/SellView.vue'), //Si se declara asi, se carga el componente solo cuando se accede a esta ruta, lo que mejora el rendimiento de la aplicación al no cargar todos los componentes al inicio.
     },                                                  //En cambio, si declaramos el componente de esta forma: component: BuyView, se cargará el componente al inicio de la aplicación, lo que puede afectar el rendimiento si el componente es pesado o si hay muchos componentes.
     {                                                   //Declararlo como la segunda forma es util cuando la vista es muy demandada.
-      path: '/editTransactions',                            //Para declararlo como componente, primero hay que importarlo.
+      path: '/editTransactions/:id',                            //Para declararlo como componente, primero hay que importarlo.
       name: 'editTransactions',
       component: () => import('@/views/EditTransactionView.vue'),
     },

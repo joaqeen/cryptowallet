@@ -1,29 +1,51 @@
 <script setup>
-import { CRYPTOS } from '../../constants/cryptos.js' //Importamos las criptomonedas para el select del formulario
-import { Field, Form, ErrorMessage } from 'vee-validate'
-import * as yup from 'yup'
+import api from '@/services/api.js'
 import { ref, onMounted } from 'vue'
-import api from '../../services/api.js'
-import { useRouter } from 'vue-router'
-
-const props = defineProps({
-  title: String,
-  buttonText: String,
-  action: String,
-})
+import * as yup from 'yup'
+import { Field, Form, ErrorMessage } from 'vee-validate'
+import { useRouter, useRoute } from 'vue-router'
+import {CRYPTOS} from '@/constants/cryptos.js'
 
 const USERS = ref([])
-const formUser = ref('')
-const formCrypto = ref('')
-const formQuantity = ref(0)
-const formDate = ref('')
-const showAlert = ref(false)
 const router = useRouter()
+const route = useRoute()
+const transactionId = route.params.id
+const TRANSACTION = ref({})
+const formUser = ref('')
+const formCrypto = ref("")
+const formQuantity = ref(0)
+const formDate = ref("")
 
 onMounted(async () => {
   const response = await api.get('/client')
   USERS.value = response.data
+
+  const response2 = await api.get('/transaction/' + transactionId)
+  TRANSACTION.value = response2.data
+
+  formUser.value = TRANSACTION.value.idCliente;
+  formCrypto.value = TRANSACTION.value.codCrypto;
+  formQuantity.value = TRANSACTION.value.cantidadCrypto;
+  formDate.value = TRANSACTION.value.fecha;
 })
+
+async function onSubmit() {
+  const body = {
+    id: transactionId,
+    accion: TRANSACTION.value.accion,
+    codCrypto: formCrypto.value,
+    idCliente: formUser.value,
+    cantidadCrypto: formQuantity.value,
+    fecha: formDate.value,
+  }
+
+  await api.put('/transaction/' + transactionId, body)
+  alert('Transacción editada con éxito. Redirigiendo a la página principal...');
+
+  router.push('/')
+
+}
+
 
 const schema = yup.object({
   //Esquema de validacion para el formulario de compra
@@ -36,26 +58,11 @@ const schema = yup.object({
   user: yup.string().required('Seleccione un usuario'),
 })
 
-async function onSubmit() {
-  const body = {
-    accion: props.action,
-    codCrypto: formCrypto.value,
-    idCliente: formUser.value,
-    cantidadCrypto: formQuantity.value,
-    fecha: formDate.value,
-  }
 
-  await api.post('/transaction', body)
-
-  alert('Transacción realizada con éxito. Redirigiendo a la página principal...');
-
-  router.push('/')
-
-}
 </script>
 
 <template>
-  <div
+ <div
     class="flex h-auto min-h-screen items-center justify-center overflow-x-hidden bg-[url('https://cdn.flyonui.com/fy-assets/blocks/marketing-ui/auth/auth-background-2.png')] bg-cover bg-center bg-no-repeat py-10"
   >
     <div class="relative flex items-center justify-center px-4 sm:px-6 lg:px-8">
@@ -101,18 +108,19 @@ async function onSubmit() {
         class="bg-base-100 shadow-base-300/20 z-1 w-full space-y-6 rounded-xl p-6 shadow-md sm:min-w-md lg:p-8"
       >
         <div class="flex items-center gap-3">
-          <img src="../../assets/icons/bitcoin-wallet.svg" class="size-8 invert" alt="brand-logo" />
+          <img src="@/assets/icons/bitcoin-wallet.svg" class="size-8 invert" alt="brand-logo" />
           <h2 class="text-base-content text-xl font-bold">Crypto Wallet</h2>
         </div>
         <div>
-          <h3 class="text-base-content mb-1.5 text-2xl font-semibold">{{ props.title }}</h3>
+          <h3 class="text-base-content mb-1.5 text-2xl font-semibold">Editar Transacción</h3>
         </div>
         <div class="space-y-4">
+          
           <Form :validation-schema="schema" @submit="onSubmit" class="mb-4 space-y-4">
             <div>
               <label class="label-text" for="selectUser">Usuario</label>
               <Field as="select" class="select" id="selectUser" name="user" v-model="formUser">
-                <option v-for="user in USERS" :key="user.id" :value="user.id">
+                <option v-for="user in USERS" :key="user.id" :value="user.id">  
                   {{ user.nombre }}
                 </option>
               </Field>
@@ -152,7 +160,7 @@ async function onSubmit() {
               <ErrorMessage name="date" class="text-red-500 text-sm mt-1" />
             </div>
             <button type="submit" class="btn btn-lg btn-primary btn-gradient btn-block">
-              {{ props.buttonText }}
+              Editar Transacción
             </button>
           </Form>
 

@@ -6,7 +6,7 @@
   <div class="w-full md:flex md:items-center md:gap-2">
     <div class="flex items-center justify-between">
       <div class="navbar-start items-center justify-between max-md:w-full">
-        <RouterLink to ="/wallet" class="flex items-center gap-5">
+        <RouterLink to ="/" class="flex items-center gap-5">
           <img src="/src/assets/icons/bitcoin-wallet.svg" alt="Logo" class="w-20 h-10 invert" />
           <span class="font-bold text-base">CryptoWallet</span>
         </RouterLink>
