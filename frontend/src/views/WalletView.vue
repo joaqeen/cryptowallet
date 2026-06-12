@@ -15,6 +15,15 @@ onMounted(async () => {
   USERS.value = response.data
   TRANSACTIONS.value = response2.data
 })
+
+async function deleteTransaction(id) {
+  const confirmacion = confirm("Esta seguro que desea Eliminar esta Transaccion?")
+  if (confirmacion){
+    await api.delete('/transaction/' + id)
+    TRANSACTIONS.value = TRANSACTIONS.value.filter((trans) => trans.id !== id)
+  }
+  
+}
 </script>
 
 <template>
@@ -43,11 +52,7 @@ onMounted(async () => {
       <tbody>
         <tr
           class="row-hover"
-          v-for="(trans, index) in TRANSACTIONS.filter(
-            (trans) => trans.idCliente === selectedUserId,
-          ).slice(0, showTransactions ? undefined : 5)"
-          :key="trans.idCliente"
-        >
+          v-for="(trans, index) in TRANSACTIONS.filter((trans) => trans.idCliente === selectedUserId).slice(0, showTransactions ? undefined : 5)" :key="trans.idCliente">
           <!--recorro con for las transacciones filtrando por el selectedUserId-->
           <td>{{ index + 1 }}</td>
           <td class="badge badge-soft text-xs">{{ trans.accion }}</td>
@@ -55,10 +60,13 @@ onMounted(async () => {
           <td>{{ trans.codCrypto }}</td>
           <td>{{ trans.cantidadCrypto }}</td>
           <td>
-            <button class="btn btn-circle btn-text btn-sm" @click="router.push('/editTransactions/' + trans.id)">
+            <button
+              class="btn btn-circle btn-text btn-sm"
+              @click="router.push('/editTransactions/' + trans.id)"
+            >
               <span class="icon-[tabler--pencil] size-5"></span>
             </button>
-            <button class="btn btn-circle btn-text btn-sm">
+            <button class="btn btn-circle btn-text btn-sm" @click="deleteTransaction(trans.id)">
               <span class="icon-[tabler--trash] size-5"></span>
             </button>
           </td>
