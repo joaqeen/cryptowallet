@@ -16,7 +16,7 @@ namespace cryptowallet.API.Services
 
             public async Task<decimal> GetPrice (string cryptoCode, string action)
             {
-                string url = $"https://criptoya.com/api/binancep2p/{cryptoCode}/ars";
+                string url = $"https://criptoya.com/api/binance/{cryptoCode}/ars";
                 var response = await _httpClient.GetAsync(url);
                 var json = await response.Content.ReadAsStringAsync();
                 var data = JsonSerializer.Deserialize<CryptoYaDto>(json, new JsonSerializerOptions
