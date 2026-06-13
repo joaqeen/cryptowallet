@@ -2,6 +2,9 @@
 import { Field, Form, ErrorMessage } from 'vee-validate'
 import * as yup from 'yup'
 import api from '../services/api.js'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const onSubmit = async (values) => {
   try {
@@ -9,6 +12,8 @@ const onSubmit = async (values) => {
       nombre: values.userName,
       email: values.userEmail,
     })
+  alert('Usuario registrado con éxito. Redirigiendo a la Billetera...')
+  router.push('/')
   } catch (error) {
     console.error('Error al crear el cliente:', error)
   }
