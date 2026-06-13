@@ -2,27 +2,47 @@
 import { ref, onMounted } from 'vue'
 import api from '@/services/api.js'
 import { useRouter } from 'vue-router'
+//import Chart from 'chart.js/auto'
 
 const USERS = ref([])
 const TRANSACTIONS = ref([])
 const selectedUserId = ref(null)
 const showTransactions = ref(false)
 const router = useRouter()
+//const chartRef = ref(null)
 
 onMounted(async () => {
   const response = await api.get('/client')
   const response2 = await api.get('/transaction')
   USERS.value = response.data
   TRANSACTIONS.value = response2.data
+
+  /*new Chart(chartRef.value, { 
+    type: 'doughnut',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow'],
+      datasets: [
+        {
+          label: 'My First Dataset',
+          data: [300, 50, 100],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+          ],
+          hoverOffset: 4
+        }
+      ]
+    }
+  })*/
 })
 
 async function deleteTransaction(id) {
-  const confirmacion = confirm("Esta seguro que desea Eliminar esta Transaccion?")
-  if (confirmacion){
+  const confirmacion = confirm('Esta seguro que desea Eliminar esta Transaccion?')
+  if (confirmacion) {
     await api.delete('/transaction/' + id)
     TRANSACTIONS.value = TRANSACTIONS.value.filter((trans) => trans.id !== id)
   }
-  
 }
 </script>
 
@@ -36,6 +56,10 @@ async function deleteTransaction(id) {
       </option>
     </select>
   </div>
+
+  <!--<div class="w-[300px] h-[300px]">
+    <canvas ref="chartRef"></canvas>
+  </div>-->
 
   <div class="w-full overflow-x-auto">
     <table class="table">
@@ -52,7 +76,11 @@ async function deleteTransaction(id) {
       <tbody>
         <tr
           class="row-hover"
-          v-for="(trans, index) in TRANSACTIONS.filter((trans) => trans.idCliente === selectedUserId).slice(0, showTransactions ? undefined : 5)" :key="trans.idCliente">
+          v-for="(trans, index) in TRANSACTIONS.filter(
+            (trans) => trans.idCliente === selectedUserId,
+          ).slice(0, showTransactions ? undefined : 5)"
+          :key="trans.idCliente"
+        >
           <!--recorro con for las transacciones filtrando por el selectedUserId-->
           <td>{{ index + 1 }}</td>
           <td class="badge badge-soft text-xs">{{ trans.accion }}</td>

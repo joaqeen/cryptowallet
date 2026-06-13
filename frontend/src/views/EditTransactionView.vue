@@ -39,7 +39,7 @@ async function onSubmit() {
     fecha: formDate.value,
   }
 
-  await api.put('/transaction/' + transactionId, body)
+  await api.patch('/transaction/' + transactionId, body)
   alert('Transacción editada con éxito. Redirigiendo a la página principal...');
 
   router.push('/')
